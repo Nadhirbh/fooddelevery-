@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+service OrderService {
+  rpc GetOrder (OrderRequest) returns (OrderResponse);
+  rpc GetAllOrders (Empty) returns (OrdersResponse);
+  rpc CreateOrder (CreateOrderRequest) returns (OrderResponse);
+  rpc UpdateOrderStatus (UpdateOrderStatusRequest) returns (OrderResponse);
+}
+
+message Empty {}
+
+message OrderRequest {
+  string id = 1;
+}
+
+message OrderResponse {
+  string id = 1;
+  string customerName = 2;
+  string deliveryAddress = 3;
+  repeated OrderItem items = 4;
+  string status = 5;
+  string restaurantId = 6;
+  float totalPrice = 7;
+}
+
+message OrdersResponse {
+  repeated OrderResponse orders = 1;
+}
+
+message CreateOrderRequest {
+  string restaurantId = 1;
+  string customerName = 2;
+  string deliveryAddress = 3;
+  repeated OrderItemInput items = 4;
+}
+
+message UpdateOrderStatusRequest {
+  string id = 1;
+  string status = 2;
+}
+
+message OrderItem {
+  string menuItemId = 1;
+  int32 quantity = 2;
+}
+
+message OrderItemInput {
+  string menuItemId = 1;
+  int32 quantity = 2;
+}
